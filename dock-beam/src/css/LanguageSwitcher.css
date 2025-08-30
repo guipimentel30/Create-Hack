@@ -1,0 +1,158 @@
+/* ===============================
+   Base
+================================= */
+.language-switcher {
+  position: relative;
+  display: inline-block;
+  font-family: inherit;
+}
+
+/* Botão principal */
+.language-switcher__trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(92, 4, 56, 0.2);
+  border-radius: 8px;
+  color: var(--primary-maroon);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.language-switcher__trigger:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--primary-purple);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(53, 57, 170, 0.15);
+}
+
+/* Ícones */
+.language-switcher__icon {
+  font-size: 1rem;
+  color: var(--primary-purple);
+}
+
+.language-switcher__arrow {
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+  color: var(--primary-purple);
+}
+
+.language-switcher__arrow.open {
+  transform: rotate(180deg);
+}
+
+/* ===============================
+   Dropdown (Desktop)
+================================= */
+.language-switcher__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+}
+
+.language-switcher__dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 200px;
+  background: #fff;
+  border: 1px solid rgba(53, 57, 170, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(53, 57, 170, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 1000;
+  overflow: hidden;
+  animation: dropdownFadeIn 0.2s ease-out;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.language-switcher__option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--primary-maroon);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-align: left;
+}
+
+.language-switcher__option:hover {
+  background: rgba(53, 57, 170, 0.05);
+  color: var(--primary-purple);
+}
+
+.language-switcher__option.active {
+  background: rgba(53, 57, 170, 0.1);
+  color: var(--primary-purple);
+  font-weight: 600;
+}
+
+/* ===============================
+   Mobile (até 768px)
+================================= */
+@media (max-width: 768px) {
+  .language-switcher {
+    display: block;
+    width: 100%;
+  }
+
+  .language-switcher__trigger {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 0.75rem 1rem;
+    background: #fff;
+    border: 1px solid rgba(53, 57, 170, 0.15);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--primary-purple);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+
+  .language-switcher__name {
+    display: inline; /* Mostra só no mobile */
+  }
+
+  .language-switcher__dropdown {
+    position: static; /* vira lista "expansível" */
+    top: auto;
+    right: auto;
+    width: 100%;
+    margin-top: 0.5rem;
+    border-radius: 8px;
+    box-shadow: none;
+    border: 1px solid rgba(53, 57, 170, 0.1);
+  }
+
+  .language-switcher__option {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  .language-switcher__option.active {
+    background: rgba(53, 57, 170, 0.08);
+  }
+}

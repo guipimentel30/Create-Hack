@@ -1,0 +1,100 @@
+{
+  "navbar": {
+    "about": "Acerca de Nosotros",
+    "home": "Inicio",
+    "howItWorks": "Cómo Funciona",
+    "partners": "Socios",
+    "login": "Iniciar Sesión",
+    "signup": "Registrarse",
+    "logout": "Cerrar Sesión"
+  },
+  "hero": {
+    "title": "Reinicia tu viaje con fe y oportunidad.",
+    "subtitle": "Conectamos refugiados a una comunidad de apoyo para aprender un nuevo idioma y encontrar trabajo.",
+    "cta": "Encuentra tu camino"
+  },
+  "features": {
+    "title": "Cómo Hacemos la Diferencia",
+    "languageLearning": {
+      "title": "Aprendizaje de Idiomas",
+      "description": "Te conectamos con profesores voluntarios cristianos para aprender portugués de manera acogedora."
+    },
+    "jobOpportunities": {
+      "title": "Oportunidades de Empleo",
+      "description": "Facilitamos conexiones con empresas que valoran la diversidad y ofrecen oportunidades reales."
+    },
+    "community": {
+      "title": "Comunidad de Apoyo",
+      "description": "Más que servicios, ofrecemos una familia donde puedes crecer y contribuir."
+    },
+    "faithBased": {
+      "title": "Basado en la Fe",
+      "description": "Nuestra misión está guiada por valores cristianos de amor, esperanza y dignidad humana."
+    }
+  },
+  "joinUs": {
+    "title": "Únete a Nuestra Comunidad",
+    "refugee": {
+      "title": "Soy Refugiado",
+      "description": "Busco capacitación y una oportunidad de trabajo.",
+      "cta": "Comenzar Mi Viaje →"
+    },
+    "teacher": {
+      "title": "Soy Profesor",
+      "description": "Quiero enseñar el idioma y compartir mi fe.",
+      "cta": "Quiero Enseñar →"
+    },
+    "company": {
+      "title": "Soy una Empresa",
+      "description": "Deseo contratar talento y hacer la diferencia.",
+      "cta": "Contratar Talento →"
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "Construyendo Puentes para Nuevos Comienzos.",
+      "subtitle": "Más que una plataforma, somos una comunidad de fe dedicada a ofrecer dignidad, capacitación y nuevas oportunidades para refugiados en Brasil."
+    },
+    "mission": {
+      "title": "Nuestra Misión: Fe que se Convierte en Acción",
+      "content": "Nacimos de un llamado claro: alcanzar pueblos refugiados de diferentes naciones, trayendo el mensaje del Evangelio a través de acciones prácticas que generan dignidad y abren puertas. Nuestra misión es ser un puente entre la necesidad y la oportunidad, conectando refugiados con profesores de idiomas cristianos y empresas que valoran la diversidad y el potencial humano. Creemos que cada persona lleva consigo un propósito único, y nuestro papel es ayudar a desbloquear ese potencial a través de la educación, el trabajo y la comunión cristiana."
+    },
+    "vision": {
+      "title": "Nuestra Visión: Un Futuro de Integración y Propósito",
+      "content": "Visualizamos un futuro donde cada refugiado que llega a Brasil no solo encuentra un lugar seguro para vivir, sino una comunidad a la que pertenecer. Soñamos con un país donde las barreras lingüísticas y culturales se transforman en puentes de comprensión mutua, donde las empresas reconocen el valor invaluable de la diversidad cultural, y donde la fe cristiana se manifiesta a través del amor práctico al prójimo. Nuestra visión es de una sociedad más justa, inclusiva y próspera, donde cada historia de refugio se convierte en una historia de nuevo comienzo y esperanza."
+    },
+    "pillars": {
+      "title": "Nuestros Pilares: Cómo Lo Hacemos Realidad",
+      "language": {
+        "title": "Capacitación y Comunión: La Enseñanza de Idiomas",
+        "content": "La comunicación es el primer puente hacia la integración. Conectamos refugiados con una red de profesores voluntarios cristianos que no solo enseñan portugués, sino que también comparten valores, cultura y fe. Nuestros profesores están capacitados para entender las necesidades específicas de cada estudiante, creando un ambiente de aprendizaje seguro, acogedor y efectivo. Más que clases de idioma, ofrecemos momentos de comunión, oración y crecimiento mutuo, donde tanto estudiantes como profesores son transformados por la experiencia."
+      },
+      "employment": {
+        "title": "Dignidad y Oportunidad: La Conexión con el Empleo",
+        "content": "Creemos que el trabajo es una herramienta poderosa para restaurar la dignidad y la autoestima. Establecemos alianzas con empresas que comparten nuestros valores de inclusión y diversidad, creando oportunidades de empleo que van más allá de la necesidad económica. Nuestro proceso de conexión toma en cuenta las habilidades, experiencias y sueños de cada refugiado, buscando no solo un trabajo, sino una carrera que permita crecimiento personal y profesional. Acompañamos tanto a refugiados como a empresas socias, garantizando una integración exitosa y duradera."
+      }
+    },
+    "cta": {
+      "title": "Únete a Nosotros en Esta Misión",
+      "subtitle": "Dock Beam es un punto de encuentro. Un lugar donde la necesidad encuentra ayuda, y la esperanza encuentra un camino.",
+      "refugee": "Soy refugiado: Comenzar Viaje →",
+      "teacher": "Quiero enseñar: Ser Voluntario →",
+      "company": "Soy una empresa: Contratar Talento →"
+    }
+  },
+  "footer": {
+    "mission": "Conectando refugiados a oportunidades a través de la fe, educación y trabajo.",
+    "navigation": {
+      "title": "Navegación",
+      "about": "Acerca de Nosotros",
+      "contact": "Contacto",
+      "faq": "FAQ"
+    },
+    "legal": {
+      "title": "Legal",
+      "privacy": "Política de Privacidad",
+      "terms": "Términos de Uso"
+    },
+    "copyright": " 2024 Dock Beam. Todos los derechos reservados."
+  }
+}

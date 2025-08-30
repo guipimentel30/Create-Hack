@@ -1,0 +1,100 @@
+{
+  "navbar": {
+    "about": "About Us",
+    "home": "Home",
+    "howItWorks": "How It Works",
+    "partners": "Partners",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout"
+  },
+  "hero": {
+    "title": "Restart your journey with faith and opportunity.",
+    "subtitle": "We connect refugees to a supportive community to learn a new language and find work.",
+    "cta": "Find your path"
+  },
+  "features": {
+    "title": "How We Make a Difference",
+    "languageLearning": {
+      "title": "Language Learning",
+      "description": "We connect you to Christian volunteer teachers to learn Portuguese in a welcoming way."
+    },
+    "jobOpportunities": {
+      "title": "Job Opportunities",
+      "description": "We facilitate connections with companies that value diversity and offer real opportunities."
+    },
+    "community": {
+      "title": "Support Community",
+      "description": "More than services, we offer a family where you can grow and contribute."
+    },
+    "faithBased": {
+      "title": "Faith-Based",
+      "description": "Our mission is guided by Christian values of love, hope, and human dignity."
+    }
+  },
+  "joinUs": {
+    "title": "Join Our Community",
+    "refugee": {
+      "title": "I'm a Refugee",
+      "description": "I seek training and a job opportunity.",
+      "cta": "Start My Journey →"
+    },
+    "teacher": {
+      "title": "I'm a Teacher",
+      "description": "I want to teach the language and share my faith.",
+      "cta": "I Want to Teach →"
+    },
+    "company": {
+      "title": "I'm a Company",
+      "description": "I want to hire talent and make a difference.",
+      "cta": "Hire Talent →"
+    }
+  },
+  "about": {
+    "hero": {
+      "title": "Building Bridges for New Beginnings.",
+      "subtitle": "More than a platform, we are a faith community dedicated to offering dignity, training, and new opportunities for refugees in Brazil."
+    },
+    "mission": {
+      "title": "Our Mission: Faith that Becomes Action",
+      "content": "We were born from a clear calling: to reach refugee peoples from different nations, bringing the Gospel message through practical actions that generate dignity and open doors. Our mission is to be a bridge between need and opportunity, connecting refugees to Christian language teachers and companies that value diversity and human potential. We believe that each person carries a unique purpose, and our role is to help unlock that potential through education, work, and Christian fellowship."
+    },
+    "vision": {
+      "title": "Our Vision: A Future of Integration and Purpose",
+      "content": "We envision a future where every refugee who arrives in Brazil not only finds a safe place to live, but a community to belong to. We dream of a country where linguistic and cultural barriers become bridges of mutual understanding, where companies recognize the invaluable value of cultural diversity, and where Christian faith manifests through practical love for others. Our vision is of a more just, inclusive and prosperous society, where every refugee story becomes a story of new beginnings and hope."
+    },
+    "pillars": {
+      "title": "Our Pillars: How We Make It Happen",
+      "language": {
+        "title": "Training and Fellowship: Language Teaching",
+        "content": "Communication is the first bridge to integration. We connect refugees to a network of Christian volunteer teachers who not only teach Portuguese, but also share values, culture and faith. Our teachers are trained to understand the specific needs of each student, creating a safe, welcoming and effective learning environment. More than language classes, we offer moments of fellowship, prayer and mutual growth, where both students and teachers are transformed by the experience."
+      },
+      "employment": {
+        "title": "Dignity and Opportunity: The Connection to Employment",
+        "content": "We believe that work is a powerful tool for restoring dignity and self-esteem. We establish partnerships with companies that share our values of inclusion and diversity, creating employment opportunities that go beyond economic necessity. Our connection process takes into account the skills, experiences and dreams of each refugee, seeking not just a job, but a career that allows personal and professional growth. We accompany both refugees and partner companies, ensuring successful and lasting integration."
+      }
+    },
+    "cta": {
+      "title": "Join Us in This Mission",
+      "subtitle": "Dock Beam is a meeting point. A place where need meets help, and hope finds a way.",
+      "refugee": "I'm a refugee: Start Journey →",
+      "teacher": "I want to teach: Be a Volunteer →",
+      "company": "I'm a company: Hire Talent →"
+    }
+  },
+  "footer": {
+    "mission": "Connecting refugees to opportunities through faith, education and work.",
+    "navigation": {
+      "title": "Navigation",
+      "about": "About Us",
+      "contact": "Contact",
+      "faq": "FAQ"
+    },
+    "legal": {
+      "title": "Legal",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Use"
+    },
+    "copyright": "© 2024 Dock Beam. All rights reserved."
+  }
+}

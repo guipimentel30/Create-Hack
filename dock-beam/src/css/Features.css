@@ -1,0 +1,51 @@
+/* Features.css */
+.features {
+  background: #FFFBF3;
+  padding: 4rem 1rem 3rem 1rem;
+  text-align: center;
+  font-family: 'Inter', 'Poppins', sans-serif;
+}
+.features h2 {
+  color: #5C0438;
+  font-size: 2rem;
+  margin-bottom: 2.5rem;
+  font-weight: 700;
+}
+.features__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.feature-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(53,57,170,0.07);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s;
+}
+.feature-card__icon {
+  color: #EB4C28;
+  margin-bottom: 1rem;
+}
+.feature-card h3 {
+  color: #3539AA;
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+}
+.feature-card p {
+  color: #5C0438;
+  font-size: 1rem;
+  font-weight: 400;
+}
+@media (max-width: 768px) {
+  .features__grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}

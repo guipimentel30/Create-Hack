@@ -1,0 +1,63 @@
+/* RTL Text Support - Only for Arabic and Persian text content */
+
+/* Apply RTL only to specific text elements when needed */
+.rtl-text {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Hero section RTL text */
+.hero[data-lang="ar"] .hero__content h1,
+.hero[data-lang="fa"] .hero__content h1,
+.hero[data-lang="ar"] .hero__content p,
+.hero[data-lang="fa"] .hero__content p {
+  direction: rtl;
+  text-align: right;
+}
+
+/* JoinUs section RTL text */
+.joinus[data-lang="ar"] h2,
+.joinus[data-lang="fa"] h2,
+.joinus[data-lang="ar"] .joinus-card h3,
+.joinus[data-lang="fa"] .joinus-card h3,
+.joinus[data-lang="ar"] .joinus-card p,
+.joinus[data-lang="fa"] .joinus-card p {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Footer RTL text */
+.footer[data-lang="ar"] .footer-mission,
+.footer[data-lang="fa"] .footer-mission,
+.footer[data-lang="ar"] .footer-column-title,
+.footer[data-lang="fa"] .footer-column-title,
+.footer[data-lang="ar"] .footer-link,
+.footer[data-lang="fa"] .footer-link,
+.footer[data-lang="ar"] .footer-bottom p,
+.footer[data-lang="fa"] .footer-bottom p {
+  direction: rtl;
+  text-align: right;
+}
+
+/* About Us page RTL text */
+.about-us-page[data-lang="ar"] h1,
+.about-us-page[data-lang="fa"] h1,
+.about-us-page[data-lang="ar"] h2,
+.about-us-page[data-lang="fa"] h2,
+.about-us-page[data-lang="ar"] h3,
+.about-us-page[data-lang="fa"] h3,
+.about-us-page[data-lang="ar"] p,
+.about-us-page[data-lang="fa"] p {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Navbar RTL text - only for text content */
+.navbar[data-lang="ar"] .nav-link,
+.navbar[data-lang="fa"] .nav-link,
+.navbar[data-lang="ar"] .btn-secondary,
+.navbar[data-lang="fa"] .btn-secondary,
+.navbar[data-lang="ar"] .btn-primary,
+.navbar[data-lang="fa"] .btn-primary {
+  direction: rtl;
+}
