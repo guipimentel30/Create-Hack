@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaEye, FaEyeSlash, FaUser, FaLock } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
 import { supabase } from '../supabaseClient';
@@ -15,6 +15,11 @@ export default function LoginPage({ onLogin = () => {} }: LoginPageProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const validateForm = () => {
     const newErrors = { email: '', password: '' };

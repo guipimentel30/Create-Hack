@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import '../css/AboutUs.css';
 
@@ -8,6 +8,11 @@ export default function AboutUsPage() {
   
   // The text for "Valores" (Values)
   const valuesText = t('Pautados na verdade e transparência; Contratação com propósito, conectando talentos e oportunidades de forma estratégica;\n Compromisso com princípios sólidos, guiando nossas decisões com integridade e responsabilidade, pautado na palavra de Deus.');
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="about-us-page" data-lang={i18n.language}>

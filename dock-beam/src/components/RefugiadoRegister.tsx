@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useState, useEffect, type FormEvent } from 'react'
 import { useRefugiado, type Idioma, type AreaAtuacao } from '../hooks/useRefugiado'
 import { supabase } from '../supabaseClient'
 
@@ -18,6 +18,11 @@ export default function RefugiadoRegister() {
   const [isAreasDropdownOpen, setIsAreasDropdownOpen] = useState(false)
   const [showOutroIdioma, setShowOutroIdioma] = useState(false)
   const [outroIdioma, setOutroIdioma] = useState('')
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleIdiomaChange = (idiomaId: number) => {
     setSelectedIdiomas(prev =>

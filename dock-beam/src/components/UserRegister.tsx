@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useState, useEffect, type FormEvent } from 'react'
 import { useUser, type Idioma } from '../hooks/useUser'
 import { supabase } from '../supabaseClient'
 
@@ -20,6 +20,11 @@ export default function ProfessorSignupForm() {
       prev.includes(idiomaId) ? prev.filter(id => id !== idiomaId) : [...prev, idiomaId]
     )
   }
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // Criar conta e usuário usando o hook
   const createAccount = async () => {

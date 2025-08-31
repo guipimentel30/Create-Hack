@@ -12,6 +12,11 @@ export interface Turma {
     id: number
     nome: string
   }
+  professor: {
+    id: string
+    nome: string
+    email: string
+  }
   horarios: TurmaHorario[]
   refugiados: RefugiadoTurma[]
 }
@@ -71,6 +76,7 @@ export function useTurmas(): UseTurmasHook {
           created_at,
           updated_at,
           idioma:idiomas(id, nome),
+          professor:users(id, nome),
           horarios:turma_horarios(
             id,
             dia_semana,

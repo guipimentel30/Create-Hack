@@ -13,6 +13,39 @@ export interface AreaAtuacao {
   created_at?: string
 }
 
+export interface Vaga {
+  id: string
+  titulo: string
+  idioma_id: number
+  area_atuacao_id: number
+  descricao?: string
+  requisitos?: string
+  salario_min?: number
+  salario_max?: number
+  status: 'ativa' | 'encerrada' | 'pausada'
+  created_at: string
+  updated_at: string
+  idioma: {
+    id: number
+    nome: string
+  }
+  area_atuacao: {
+    id: number
+    nome: string
+  }
+  candidaturas_count: number
+}
+
+export interface TurmaDisponivel {
+  id: string
+  semestre_ano: string
+  nivel_proficiencia: string
+  idioma: {
+    id: number
+    nome: string
+  }
+}
+
 interface CreateRefugiadoData {
   nome: string
   cpf: string
@@ -26,22 +59,39 @@ interface CreateRefugiadoData {
 interface UseRefugiadoHook {
   idiomas: Idioma[]
   areas: AreaAtuacao[]
+  vagas: Vaga[]
+  turmasDisponiveis: TurmaDisponivel[]
   loading: boolean
+  vagasLoading: boolean
+  turmasLoading: boolean
   error: string | null
+  vagasError: string | null
+  turmasError: string | null
   createRefugiado: (refugiadoData: CreateRefugiadoData, userId?: string) => Promise<void>
+  fetchVagasDisponiveis: () => Promise<void>
+  fetchTurmasDisponiveis: () => Promise<void>
   clearError: () => void
+  createCandidatura: (vagaId: string) => Promise<void>
 }
 
 export function useRefugiado(): UseRefugiadoHook {
   const [idiomas, setIdiomas] = useState<Idioma[]>([])
   const [areas, setAreas] = useState<AreaAtuacao[]>([])
+  const [vagas, setVagas] = useState<Vaga[]>([])
+  const [turmasDisponiveis, setTurmasDisponiveis] = useState<TurmaDisponivel[]>([])
   const [loading, setLoading] = useState(false)
+  const [vagasLoading, setVagasLoading] = useState(false)
+  const [turmasLoading, setTurmasLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [vagasError, setVagasError] = useState<string | null>(null)
+  const [turmasError, setTurmasError] = useState<string | null>(null)
 
   // Buscar idiomas e áreas disponíveis
   useEffect(() => {
     fetchIdiomas()
     fetchAreas()
+    fetchVagasDisponiveis()
+    fetchTurmasDisponiveis()
   }, [])
 
   const fetchIdiomas = async () => {
@@ -71,6 +121,83 @@ export function useRefugiado(): UseRefugiadoHook {
     } catch (err) {
       console.error('Erro ao buscar áreas:', err)
       setError(err instanceof Error ? err.message : 'Erro ao carregar áreas de atuação')
+    }
+  }
+
+  const fetchVagasDisponiveis = async () => {
+    setVagasLoading(true)
+    setVagasError(null)
+
+    try {
+      const { data, error } = await supabase
+        .from('vagas')
+        .select(`
+          id,
+          titulo,
+          idioma_id,
+          area_atuacao_id,
+          descricao,
+          requisitos,
+          salario_min,
+          salario_max,
+          status,
+          created_at,
+          updated_at,
+          idioma:idiomas(id, nome),
+          area_atuacao:areas_atuacao(id, nome)
+        `)
+        .eq('status', 'ativa')
+        .order('created_at', { ascending: false })
+
+      if (error) throw error
+
+      // Buscar contagem de candidaturas para cada vaga
+      const vagasWithCounts = await Promise.all(
+        (data || []).map(async (vaga) => {
+          const { count } = await supabase
+            .from('candidaturas')
+            .select('*', { count: 'exact', head: true })
+            .eq('vaga_id', vaga.id)
+
+          return {
+            ...vaga,
+            candidaturas_count: count || 0
+          }
+        })
+      )
+
+      setVagas(vagasWithCounts)
+    } catch (err) {
+      console.error('Erro ao buscar vagas:', err)
+      setVagasError(err instanceof Error ? err.message : 'Erro ao carregar vagas')
+    } finally {
+      setVagasLoading(false)
+    }
+  }
+
+  const fetchTurmasDisponiveis = async () => {
+    setTurmasLoading(true)
+    setTurmasError(null)
+
+    try {
+      const { data, error } = await supabase
+        .from('turmas')
+        .select(`
+          id,
+          semestre_ano,
+          nivel_proficiencia,
+          idioma:idiomas(id, nome)
+        `)
+        .order('semestre_ano', { ascending: false })
+
+      if (error) throw error
+
+      setTurmasDisponiveis(data || [])
+    } catch (err) {
+      console.error('Erro ao buscar turmas:', err)
+      setTurmasError(err instanceof Error ? err.message : 'Erro ao carregar turmas')
+    } finally {
+      setTurmasLoading(false)
     }
   }
 
@@ -152,6 +279,43 @@ export function useRefugiado(): UseRefugiadoHook {
     }
   }
 
+  const createCandidatura = async (vagaId: string) => {
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session?.user?.id) {
+        throw new Error('Usuário não autenticado. Faça login novamente.')
+      }
+
+      // Verificar se o usuário é um refugiado registrado
+      const { data: refugiado, error: refugiadoError } = await supabase
+        .from('refugiados')
+        .select('id')
+        .eq('id', session.user.id)
+        .single()
+
+      if (refugiadoError || !refugiado) {
+        throw new Error('Usuário não encontrado como refugiado. Complete seu cadastro primeiro.')
+      }
+
+      const { error } = await supabase
+        .from('candidaturas')
+        .insert([{
+          vaga_id: vagaId,
+          refugiado_id: session.user.id
+        }])
+
+      if (error) {
+        if (error.code === '23505') {
+          throw new Error('Você já se candidatou a esta vaga.')
+        }
+        throw new Error(`Erro no banco de dados: ${error.message}`)
+      }
+    } catch (err) {
+      console.error('Erro ao criar candidatura:', err)
+      throw err
+    }
+  }
+
   const clearError = () => {
     setError(null)
   }
@@ -159,9 +323,18 @@ export function useRefugiado(): UseRefugiadoHook {
   return {
     idiomas,
     areas,
+    vagas,
+    turmasDisponiveis,
     loading,
+    vagasLoading,
+    turmasLoading,
     error,
+    vagasError,
+    turmasError,
     createRefugiado,
-    clearError
+    fetchVagasDisponiveis,
+    fetchTurmasDisponiveis,
+    clearError,
+    createCandidatura
   }
 }

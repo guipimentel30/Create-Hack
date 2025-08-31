@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTurmas } from '../hooks/useTurmas';
 import TurmaCard from './TurmaCard';
 import '../css/UserRegister.css';
@@ -6,6 +6,11 @@ import '../css/ProfessorDashboard.css';
 
 export default function ProfessorDashboard() {
   const { turmas, loading, error, clearError } = useTurmas();
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleTurmaClick = (turmaId: string) => {
     // TODO: Navigate to turma details page

@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useState, useEffect, type FormEvent } from 'react'
 import { useEmpresa, type SetorAtuacao } from '../hooks/useEmpresa.ts'
 import { supabase } from '../supabaseClient'
 
@@ -11,11 +11,17 @@ export default function EmpresaRegister() {
   const [setorAtuacao, setSetorAtuacao] = useState('')
   const [website, setWebsite] = useState('')
   const [descricao, setDescricao] = useState('')
+  const [descricaoCount, setDescricaoCount] = useState(0)
   const [nomeResponsavel, setNomeResponsavel] = useState('')
   const [emailContato, setEmailContato] = useState('')
   const [telefoneComercial, setTelefoneComercial] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   // Criar conta e empresa usando o hook
   const createAccount = async () => {
