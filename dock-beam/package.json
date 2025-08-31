@@ -4,12 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --force",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "country-flag-icons": "^1.5.19",
     "i18next": "^25.4.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
