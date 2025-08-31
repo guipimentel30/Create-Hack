@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useTurmas } from '../hooks/useTurmas';
 import { useRefugiado } from '../hooks/useRefugiado';
 import '../css/UserRegister.css';
@@ -6,10 +7,20 @@ import '../css/RefugiadoDashboard.css';
 
 export default function RefugiadoDashboard() {
   const { turmas, loading: turmasLoading, error: turmasError } = useTurmas();
-  const { vagas, vagasLoading, vagasError } = useRefugiado();
+  const { 
+    vagas, 
+    candidaturas, 
+    vagasLoading, 
+    candidaturasLoading, 
+    vagasError, 
+    candidaturasError, 
+    createCandidatura, 
+    fetchVagasDisponiveis,
+    fetchMinhasCandidaturas 
+  } = useRefugiado();
   const [selectedView, setSelectedView] = useState<'dashboard' | 'turma' | 'empregos'>('dashboard');
   const [activeTab, setActiveTab] = useState<'oportunidades' | 'candidaturas'>('oportunidades');
-  const [applyingToVaga, setApplyingToVaga] = useState<number | null>(null);
+  const [applyingToVaga, setApplyingToVaga] = useState<string | null>(null);
   
   // Scroll to top when component mounts
   useEffect(() => {
@@ -50,8 +61,12 @@ export default function RefugiadoDashboard() {
     setApplyingToVaga(vagaId);
     try {
       await createCandidatura(vagaId);
+      await fetchVagasDisponiveis();
+      await fetchMinhasCandidaturas();
+      alert('Candidatura enviada com sucesso!');
     } catch (error) {
-      alert('Erro ao enviar candidatura. Tente novamente.');
+      console.error('Erro ao enviar candidatura:', error);
+      alert(error instanceof Error ? error.message : 'Erro ao enviar candidatura. Tente novamente.');
     } finally {
       setApplyingToVaga(null);
     }
@@ -188,8 +203,12 @@ export default function RefugiadoDashboard() {
                                 Publicado em {new Date(vaga.created_at).toLocaleDateString('pt-BR')}
                               </span>
                             </div>
-                            <button className="candidatar-btn">
-                              Candidatar-se
+                            <button 
+                              className="candidatar-btn"
+                              onClick={() => handleCandidatar(vaga.id)}
+                              disabled={applyingToVaga === vaga.id}
+                            >
+                              {applyingToVaga === vaga.id ? 'Enviando...' : 'Candidatar-se'}
                             </button>
                           </div>
                         ))}
@@ -200,17 +219,47 @@ export default function RefugiadoDashboard() {
 
                 {activeTab === 'candidaturas' && (
                   <div className="candidaturas-section">
-                    <h3>Minhas Candidaturas</h3>
-                    <div className="empty-candidaturas">
-                      <h4>Você ainda não se candidatou a nenhuma vaga</h4>
-                      <p>Suas candidaturas aparecerão aqui quando você se aplicar para vagas.</p>
-                      <button 
-                        className="ver-vagas-btn"
-                        onClick={() => handleTabChange('oportunidades')}
-                      >
-                        Ver Vagas Disponíveis
-                      </button>
-                    </div>
+                    <h3>Minhas Candidaturas ({candidaturas.length})</h3>
+                    
+                    {candidaturasLoading ? (
+                      <div className="loading-state">
+                        <p>Carregando candidaturas...</p>
+                      </div>
+                    ) : candidaturasError ? (
+                      <div className="error-message">
+                        <p>Erro ao carregar candidaturas: {candidaturasError}</p>
+                      </div>
+                    ) : candidaturas.length === 0 ? (
+                      <div className="empty-candidaturas">
+                        <h4>Você ainda não se candidatou a nenhuma vaga</h4>
+                        <p>Suas candidaturas aparecerão aqui quando você se aplicar para vagas.</p>
+                        <button 
+                          className="ver-vagas-btn"
+                          onClick={() => handleTabChange('oportunidades')}
+                        >
+                          Ver Vagas Disponíveis
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="candidaturas-grid">
+                        {candidaturas.map((candidatura) => (
+                          <div key={candidatura.id} className="candidatura-card">
+                            <h4>{candidatura.vaga.titulo}</h4>
+                            <p><strong>ID da Vaga:</strong> {candidatura.vaga.id}</p>
+                            <p><strong>Setor:</strong> {candidatura.vaga.area_atuacao.nome}</p>
+                            <p><strong>Data da Candidatura:</strong> {new Date(candidatura.created_at).toLocaleDateString('pt-BR')}</p>
+                            <div className="candidatura-status">
+                              <span className={`status-badge status-${candidatura.status}`}>
+                                {candidatura.status === 'aplicado' && 'Aplicado'}
+                                {candidatura.status === 'em_analise' && 'Em Análise'}
+                                {candidatura.status === 'aprovado' && 'Aprovado'}
+                                {candidatura.status === 'rejeitado' && 'Rejeitado'}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -266,7 +315,7 @@ export default function RefugiadoDashboard() {
                     <div className="card-stats">
                       <span>{vagasAtivas.length} vagas disponíveis</span>
                       <span>•</span>
-                      <span>0 candidaturas ativas</span>
+                      <span>{candidaturas.length} candidaturas ativas</span>
                     </div>
                   </div>
                   <div className="card-arrow">→</div>

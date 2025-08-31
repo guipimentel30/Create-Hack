@@ -46,6 +46,22 @@ export interface TurmaDisponivel {
   }
 }
 
+export interface Candidatura {
+  id: string
+  vaga_id: string
+  refugiado_id: string
+  status: 'aplicado' | 'em_analise' | 'aprovado' | 'rejeitado'
+  created_at: string
+  vaga: {
+    id: string
+    titulo: string
+    area_atuacao: {
+      id: number
+      nome: string
+    }
+  }
+}
+
 interface CreateRefugiadoData {
   nome: string
   cpf: string
@@ -60,15 +76,19 @@ interface UseRefugiadoHook {
   idiomas: Idioma[]
   areas: AreaAtuacao[]
   vagas: Vaga[]
+  candidaturas: Candidatura[]
   turmasDisponiveis: TurmaDisponivel[]
   loading: boolean
   vagasLoading: boolean
+  candidaturasLoading: boolean
   turmasLoading: boolean
   error: string | null
   vagasError: string | null
+  candidaturasError: string | null
   turmasError: string | null
   createRefugiado: (refugiadoData: CreateRefugiadoData, userId?: string) => Promise<void>
   fetchVagasDisponiveis: () => Promise<void>
+  fetchMinhasCandidaturas: () => Promise<void>
   fetchTurmasDisponiveis: () => Promise<void>
   clearError: () => void
   createCandidatura: (vagaId: string) => Promise<void>
@@ -78,12 +98,15 @@ export function useRefugiado(): UseRefugiadoHook {
   const [idiomas, setIdiomas] = useState<Idioma[]>([])
   const [areas, setAreas] = useState<AreaAtuacao[]>([])
   const [vagas, setVagas] = useState<Vaga[]>([])
+  const [candidaturas, setCandidaturas] = useState<Candidatura[]>([])
   const [turmasDisponiveis, setTurmasDisponiveis] = useState<TurmaDisponivel[]>([])
   const [loading, setLoading] = useState(false)
   const [vagasLoading, setVagasLoading] = useState(false)
+  const [candidaturasLoading, setCandidaturasLoading] = useState(false)
   const [turmasLoading, setTurmasLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [vagasError, setVagasError] = useState<string | null>(null)
+  const [candidaturasError, setCandidaturasError] = useState<string | null>(null)
   const [turmasError, setTurmasError] = useState<string | null>(null)
 
   // Buscar idiomas e áreas disponíveis
@@ -91,6 +114,7 @@ export function useRefugiado(): UseRefugiadoHook {
     fetchIdiomas()
     fetchAreas()
     fetchVagasDisponiveis()
+    fetchMinhasCandidaturas()
     fetchTurmasDisponiveis()
   }, [])
 
@@ -172,6 +196,46 @@ export function useRefugiado(): UseRefugiadoHook {
       setVagasError(err instanceof Error ? err.message : 'Erro ao carregar vagas')
     } finally {
       setVagasLoading(false)
+    }
+  }
+
+  const fetchMinhasCandidaturas = async () => {
+    setCandidaturasLoading(true)
+    setCandidaturasError(null)
+
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session?.user?.id) {
+        throw new Error('Usuário não autenticado')
+      }
+
+      const { data, error } = await supabase
+        .from('candidaturas')
+        .select(`
+          id,
+          vaga_id,
+          refugiado_id,
+          status,
+          created_at,
+          vaga: vaga_id (
+            id,
+            titulo,
+            area_atuacao: area_atuacao_id (
+              id,
+              nome
+            )
+          )
+        `)
+        .eq('refugiado_id', session.user.id)
+
+      if (error) throw error
+
+      setCandidaturas(data || [])
+    } catch (err) {
+      console.error('Erro ao buscar candidaturas:', err)
+      setCandidaturasError(err instanceof Error ? err.message : 'Erro ao carregar candidaturas')
+    } finally {
+      setCandidaturasLoading(false)
     }
   }
 
@@ -324,15 +388,19 @@ export function useRefugiado(): UseRefugiadoHook {
     idiomas,
     areas,
     vagas,
+    candidaturas,
     turmasDisponiveis,
     loading,
     vagasLoading,
+    candidaturasLoading,
     turmasLoading,
     error,
     vagasError,
+    candidaturasError,
     turmasError,
     createRefugiado,
     fetchVagasDisponiveis,
+    fetchMinhasCandidaturas,
     fetchTurmasDisponiveis,
     clearError,
     createCandidatura

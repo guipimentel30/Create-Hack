@@ -2,6 +2,7 @@ import { useState, useEffect, type FormEvent } from 'react'
 import { useRefugiado, type Idioma, type AreaAtuacao } from '../hooks/useRefugiado'
 import { supabase } from '../supabaseClient'
 import '../css/UserRegister.css' // Certifique-se de que este CSS contém as classes de erro adicionadas abaixo
+import { useTranslation } from 'react-i18next';
 
 // --- Funções de Validação e Máscara (fora do componente para otimização) ---
 
@@ -79,6 +80,7 @@ const formatPhone = (value: string) => {
 
 export default function RefugiadoRegister() {
   const { idiomas, areas, createRefugiado, loading, error: apiError, clearError } = useRefugiado();
+  const { t } = useTranslation();
   const [nome, setNome] = useState('');
   const [cpf, setCpf] = useState('');
   const [telefone, setTelefone] = useState('');
@@ -140,7 +142,7 @@ export default function RefugiadoRegister() {
   };
 
   const getSelectedAreasText = () => {
-    if (selectedAreas.length === 0) return 'Selecione as áreas de interesse';
+    if (selectedAreas.length === 0) return t('refugiadoRegister.selectAreas');
     if (selectedAreas.length === 1) {
       const area = areas.find(a => a.id === selectedAreas[0]);
       return area?.nome || '';
@@ -155,12 +157,12 @@ export default function RefugiadoRegister() {
   const validateForm = (): boolean => {
     const newErrors: { [key: string]: string } = {};
   
-    if (!nome.trim()) newErrors.nome = "O nome completo é obrigatório.";
-    if (!isEmailValid(email)) newErrors.email = "Por favor, insira um email válido.";
-    if (password.length < 6) newErrors.password = "A senha deve ter pelo menos 6 caracteres.";
-    if (!isCPFValid(cpf)) newErrors.cpf = "O CPF informado é inválido.";
-    if (!isPhoneValid(telefone)) newErrors.telefone = "O telefone é inválido. Use (XX) XXXXX-XXXX.";
-    if (!nacionalidade.trim()) newErrors.nacionalidade = "A nacionalidade é obrigatória.";
+    if (!nome.trim()) newErrors.nome = t('refugiadoRegister.errors.nome');
+    if (!isEmailValid(email)) newErrors.email = t('refugiadoRegister.errors.email');
+    if (password.length < 6) newErrors.password = t('refugiadoRegister.errors.password');
+    if (!isCPFValid(cpf)) newErrors.cpf = t('refugiadoRegister.errors.cpf');
+    if (!isPhoneValid(telefone)) newErrors.telefone = t('refugiadoRegister.errors.telefone');
+    if (!nacionalidade.trim()) newErrors.nacionalidade = t('refugiadoRegister.errors.nacionalidade');
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -202,15 +204,15 @@ export default function RefugiadoRegister() {
 
       if (data.session) {
         await createRefugiado(refugiadoData, data.user.id);
-        alert('Conta criada com sucesso!');
+        alert(t('refugiadoRegister.success'));
       } else {
         localStorage.setItem('pendingRefugiadoData', JSON.stringify(refugiadoData));
-        alert('Conta criada! Verifique seu email para confirmar a conta.');
+        alert(t('refugiadoRegister.pending'));
       }
 
     } catch (err: unknown) {
       console.error('Erro no cadastro:', err);
-      alert('Erro ao cadastrar: ' + (err instanceof Error ? err.message : 'Erro desconhecido'));
+      alert(t('refugiadoRegister.error') + (err instanceof Error ? err.message : 'Erro desconhecido'));
     }
   };
 
@@ -229,8 +231,8 @@ export default function RefugiadoRegister() {
         <div className="register-hero__content">
           <div className="register-container">
             <div className="register-header">
-              <h2 className="register-header__title">Cadastro de Refugiado</h2>
-              <p className="register-header__subtitle">Complete seu perfil para encontrar oportunidades</p>
+              <h2 className="register-header__title">{t('refugiadoRegister.title')}</h2>
+              <p className="register-header__subtitle">{t('refugiadoRegister.subtitle')}</p>
             </div>
 
             <form onSubmit={handleSubmit} className="register-form" noValidate>
@@ -238,7 +240,7 @@ export default function RefugiadoRegister() {
               <div className="form-group">
                 <input
                   type="email"
-                  placeholder="Email"
+                  placeholder={t('refugiadoRegister.emailPlaceholder')}
                   value={email}
                   onChange={handleInputChange(setEmail, 'email')}
                   required
@@ -251,7 +253,7 @@ export default function RefugiadoRegister() {
               <div className="form-group">
                 <input
                   type="password"
-                  placeholder="Senha (mínimo 6 caracteres)"
+                  placeholder={t('refugiadoRegister.passwordPlaceholder')}
                   value={password}
                   onChange={handleInputChange(setPassword, 'password')}
                   required
@@ -265,7 +267,7 @@ export default function RefugiadoRegister() {
               <div className="form-group">
                 <input
                   type="text"
-                  placeholder="Nome completo"
+                  placeholder={t('refugiadoRegister.nomePlaceholder')}
                   value={nome}
                   onChange={handleInputChange(setNome, 'nome')}
                   required
@@ -278,7 +280,7 @@ export default function RefugiadoRegister() {
               <div className="form-group">
                 <input
                   type="text"
-                  placeholder="CPF (000.000.000-00)"
+                  placeholder={t('refugiadoRegister.cpfPlaceholder')}
                   value={cpf}
                   onChange={handleCpfChange}
                   required
@@ -292,7 +294,7 @@ export default function RefugiadoRegister() {
               <div className="form-group">
                 <input
                   type="tel"
-                  placeholder="Telefone ((00) 00000-0000)"
+                  placeholder={t('refugiadoRegister.telefonePlaceholder')}
                   value={telefone}
                   onChange={handleTelefoneChange}
                   required
@@ -306,7 +308,7 @@ export default function RefugiadoRegister() {
               <div className="form-group">
                 <input
                   type="text"
-                  placeholder="Nacionalidade"
+                  placeholder={t('refugiadoRegister.nacionalidadePlaceholder')}
                   value={nacionalidade}
                   onChange={handleInputChange(setNacionalidade, 'nacionalidade')}
                   required
@@ -316,60 +318,80 @@ export default function RefugiadoRegister() {
               </div>
 
               {/* --- Idiomas --- */}
-              <fieldset className="form-fieldset">
-                <legend className="form-legend">Idiomas que você fala:</legend>
+              <div className="form-group">
+                <label htmlFor="idiomas" className="form-label">{t('refugiadoRegister.languages')}</label>
                 <div className="form-checkbox-group">
                   {idiomas.map((idioma: Idioma) => (
                     <label key={idioma.id} className="form-checkbox-item">
-                      <input type="checkbox" checked={selectedIdiomas.includes(idioma.id)} onChange={() => handleIdiomaChange(idioma.id)} className="checkbox-input" />
+                      <input
+                        type="checkbox"
+                        checked={selectedIdiomas.includes(idioma.id)}
+                        onChange={() => handleIdiomaChange(idioma.id)}
+                        className="checkbox-input"
+                      />
                       <span className="checkbox-label">{idioma.nome}</span>
                     </label>
                   ))}
                   <label className="form-checkbox-item">
                     <input type="checkbox" checked={showOutroIdioma} onChange={handleOutroIdiomaToggle} className="checkbox-input" />
-                    <span className="checkbox-label">Outros</span>
+                    <span className="checkbox-label">{t('refugiadoRegister.outroIdioma')}</span>
                   </label>
                   {showOutroIdioma && (
                     <div className="form-group">
-                      <input type="text" placeholder="Digite o(s) idioma(s)" value={outroIdioma} onChange={e => setOutroIdioma(e.target.value)} className="form-input" />
+                      <input type="text" placeholder={t('refugiadoRegister.outroIdiomaPlaceholder')} value={outroIdioma} onChange={e => setOutroIdioma(e.target.value)} className="form-input" />
                     </div>
                   )}
                 </div>
-              </fieldset>
-              
+                {errors.idiomas && <span className="error-message">{errors.idiomas}</span>}
+              </div>
+
               {/* --- Áreas de Atuação --- */}
-              <fieldset className="form-fieldset">
-                <legend className="form-legend">Áreas de atuação/interesse:</legend>
+              <div className="form-group">
+                <label htmlFor="areas" className="form-label">{t('refugiadoRegister.workAreas')}</label>
                 <div className="dropdown-container">
-                  <button type="button" className="dropdown-toggle" onClick={() => setIsAreasDropdownOpen(!isAreasDropdownOpen)}>
+                  <button 
+                    type="button" 
+                    className="dropdown-toggle" 
+                    onClick={() => setIsAreasDropdownOpen(!isAreasDropdownOpen)}
+                  >
                     {getSelectedAreasText()}
-                    <span className={`dropdown-arrow ${isAreasDropdownOpen ? 'open' : ''}`}>▼</span>
+                    <span className="dropdown-arrow">▼</span>
                   </button>
                   {isAreasDropdownOpen && (
                     <div className="dropdown-menu">
                       {areas.map((area: AreaAtuacao) => (
                         <label key={area.id} className="dropdown-item">
-                          <input type="checkbox" checked={selectedAreas.includes(area.id)} onChange={() => handleAreaChange(area.id)} className="checkbox-input" />
+                          <input
+                            type="checkbox"
+                            checked={selectedAreas.includes(area.id)}
+                            onChange={() => handleAreaChange(area.id)}
+                            className="checkbox-input"
+                          />
                           <span className="checkbox-label">{area.nome}</span>
                         </label>
                       ))}
                     </div>
                   )}
                 </div>
-              </fieldset>
+                {errors.areas && <span className="error-message">{errors.areas}</span>}
+              </div>
               
               {/* --- Resumo de Experiências --- */}
               <div className="form-group">
+                <label htmlFor="resumoExperiencias" className="form-label">{t('refugiadoRegister.experience')}</label>
                 <textarea
-                  placeholder="Conte um pouco sobre sua experiência profissional"
+                  id="resumoExperiencias"
+                  className={`form-input form-textarea ${errors.resumoExperiencias ? 'error' : ''}`}
                   value={resumoExperiencias}
-                  onChange={handleInputChange(setResumoExperiencias, 'resumoExperiencias')}
-                  className="form-input form-textarea"
+                  onChange={(e) => setResumoExperiencias(e.target.value)}
+                  placeholder={t('refugiadoRegister.experiencePlaceholder')}
+                  rows={4}
                 />
+                {errors.resumoExperiencias && <span className="error-message">{errors.resumoExperiencias}</span>}
               </div>
 
               <button type="submit" disabled={loading} className="register-submit">
-                {loading ? 'Cadastrando...' : 'Cadastrar'}
+                {loading ? t('refugiadoRegister.registering') : t('refugiadoRegister.registerButton')}
               </button>
             </form>
           </div>
