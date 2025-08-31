@@ -67,9 +67,9 @@ Mas isso não precisa ser assim.
             </p>
           </div>
           <div className="partners-cta__buttons">
-            <button className="cta-button cta-button--partner">
+            {/*<button className="cta-button cta-button--partner">
               {t('Seja um Parceiro')}
-            </button>
+            </button>*/}
           </div>
         </div>
       </section>
