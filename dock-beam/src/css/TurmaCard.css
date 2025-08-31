@@ -1,0 +1,151 @@
+.turma-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 120px;
+}
+
+.turma-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  border-color: #3b82f6;
+}
+
+.turma-card:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.turma-card__header {
+  flex: 0 0 auto;
+  min-width: 280px;
+}
+
+.turma-card__title {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.turma-card__title h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  line-height: 1.3;
+}
+
+.turma-card__status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+  width: fit-content;
+}
+
+.status-active {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status-future {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.status-finished {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+.turma-card__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.turma-card__info {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.turma-card__detail {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 100px;
+}
+
+.turma-card__label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.turma-card__value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.turma-card__schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.turma-card__schedule-text {
+  font-size: 0.875rem;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.turma-card__arrow {
+  flex: 0 0 auto;
+  color: #9ca3af;
+  transition: color 0.3s ease;
+}
+
+.turma-card:hover .turma-card__arrow {
+  color: #3b82f6;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .turma-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    min-height: auto;
+  }
+  
+  .turma-card__header {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .turma-card__info {
+    gap: 16px;
+  }
+  
+  .turma-card__detail {
+    min-width: 80px;
+  }
+  
+  .turma-card__arrow {
+    align-self: center;
+  }
+}

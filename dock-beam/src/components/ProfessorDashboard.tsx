@@ -1,7 +1,17 @@
 import React from 'react';
+import { useTurmas } from '../hooks/useTurmas';
+import TurmaCard from './TurmaCard';
 import '../css/UserRegister.css';
+import '../css/ProfessorDashboard.css';
 
 export default function ProfessorDashboard() {
+  const { turmas, loading, error, clearError } = useTurmas();
+
+  const handleTurmaClick = (turmaId: string) => {
+    // TODO: Navigate to turma details page
+    console.log('Clicked turma:', turmaId);
+  };
+
   return (
     <div className="user-register-page">
       <div className="register-hero">
@@ -10,12 +20,47 @@ export default function ProfessorDashboard() {
           <div className="register-container">
             <div className="register-header">
               <h2 className="register-header__title">Dashboard do Professor</h2>
-              <p className="register-header__subtitle">Bem-vindo ao seu painel de controle</p>
+              <p className="register-header__subtitle">Gerencie suas turmas e acompanhe o progresso dos alunos</p>
             </div>
             
             <div className="dashboard-content">
-              <p>Esta é a página do dashboard para professores.</p>
-              <p>Aqui você poderá gerenciar suas aulas, alunos e horários.</p>
+              {error && (
+                <div className="error-message">
+                  <p>Erro ao carregar turmas: {error}</p>
+                  <button onClick={clearError}>
+                    Tentar novamente
+                  </button>
+                </div>
+              )}
+
+              {loading ? (
+                <div className="loading-state">
+                  <p>Carregando suas turmas...</p>
+                </div>
+              ) : turmas.length === 0 ? (
+                <div className="empty-state">
+                  <h3>Nenhuma turma encontrada</h3>
+                  <p>
+                    Você ainda não possui turmas cadastradas. Entre em contato com a administração 
+                    para que suas turmas sejam criadas no sistema.
+                  </p>
+                </div>
+              ) : (
+                <div className="turmas-section">
+                  <h3 style={{ marginBottom: '1.5rem', color: '#333' }}>
+                    Suas Turmas ({turmas.length})
+                  </h3>
+                  <div className="turmas-grid">
+                    {turmas.map((turma) => (
+                      <TurmaCard 
+                        key={turma.id} 
+                        turma={turma} 
+                        onClick={handleTurmaClick}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
