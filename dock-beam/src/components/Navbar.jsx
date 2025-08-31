@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { FiMenu, FiX } from 'react-icons/fi'
 import { useTranslation } from 'react-i18next'
 import LanguageSwitcher from './LanguageSwitcher.jsx'; 
+import logo from '../images/logo.png'; 
+
 import '../css/Navbar.css'
 
 export default function Navbar({ session, onShowAuth, currentPage, setCurrentPage }) {
@@ -21,18 +23,11 @@ export default function Navbar({ session, onShowAuth, currentPage, setCurrentPag
       <div className="navbar-container">
         {/* Logo */}
         <div className="navbar-logo">
-          <img src="../../logo-dock-beam.png" alt="Dock Beam" className="logo-image" />
-          <span className="logo-text">Dock Beam</span>
+          <img src={logo} alt="Dock Beam" className="logo-image" />
         </div>
 
         {/* Desktop Navigation */}
         <div className="navbar-links">
-          <button 
-            onClick={() => setCurrentPage('about')} 
-            className={`nav-link ${currentPage === 'about' ? 'nav-link--active' : ''}`}
-          >
-            {t('navbar.about')}
-          </button>
           <button 
             onClick={() => setCurrentPage('home')} 
             className={`nav-link ${currentPage === 'home' ? 'nav-link--active' : ''}`}
@@ -41,6 +36,12 @@ export default function Navbar({ session, onShowAuth, currentPage, setCurrentPag
           </button>
           <a href="#como-funciona" className="nav-link">{t('navbar.howItWorks')}</a>
           <a href="#parceiros" className="nav-link">{t('navbar.partners')}</a>
+          <button 
+            onClick={() => setCurrentPage('about')} 
+            className={`nav-link ${currentPage === 'about' ? 'nav-link--active' : ''}`}
+          >
+            {t('navbar.about')}
+          </button>
         </div>
 
         {/* Right side - Language switcher and buttons */}

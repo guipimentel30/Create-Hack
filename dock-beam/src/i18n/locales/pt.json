@@ -9,9 +9,9 @@
     "logout": "Sair"
   },
   "hero": {
-    "title": "Recomece sua jornada com fé e oportunidade.",
-    "subtitle": "Conectamos refugiados a uma comunidade de apoio para aprender um novo idioma e encontrar trabalho.",
-    "cta": "Encontre seu caminho"
+    "title": "Recomece sua jornada com muitas oportunidades.",
+    "subtitle": "Conectamos refugiados com empregos dignos e um novo idioma.",
+    "cta": "Encontrar vagas"
   },
   "features": {
     "title": "Como Fazemos a Diferença",
@@ -33,21 +33,21 @@
     }
   },
   "joinUs": {
-    "title": "Faça Parte da Nossa Comunidade",
+    "title": "Embarque nessa jornada",
     "refugee": {
-      "title": "Sou Refugiado",
-      "description": "Busco capacitação e uma oportunidade de trabalho.",
-      "cta": "Começar Minha Jornada →"
+      "title": "Estou em situação de refúgio",
+      "description": "Busco novas oportunidades de emprego.",
+      "cta": "Cadastrar →"
     },
     "teacher": {
       "title": "Sou Professor",
-      "description": "Quero ensinar o idioma e compartilhar minha fé.",
-      "cta": "Quero Ensinar →"
+      "description": "Seja um professor português.",
+      "cta": "Lecionar →"
     },
     "company": {
       "title": "Sou uma Empresa",
-      "description": "Desejo contratar talentos e fazer a diferença.",
-      "cta": "Contratar Talentos →"
+      "description": "Quero contratrar talentos.",
+      "cta": "Contratrar →"
     }
   },
   "about": {
@@ -95,6 +95,6 @@
       "privacy": "Política de Privacidade",
       "terms": "Termos de Uso"
     },
-    "copyright": "© 2024 Dock Beam. Todos os direitos reservados."
+    "copyright": "© 2025 Dock Beam. Todos os direitos reservados."
   }
 }

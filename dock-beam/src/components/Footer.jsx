@@ -1,5 +1,7 @@
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa'
 import { useTranslation } from 'react-i18next'
+import logo from '../images/logo.png'; 
+
 import '../css/Footer.css'
 
 export default function Footer() {
@@ -10,10 +12,11 @@ export default function Footer() {
         <div className="footer-grid">
           {/* Column 1 - Logo and Mission */}
           <div className="footer-column">
+            <span className="footer-logo-text">Dock Beam</span>
+            {/*
             <div className="footer-logo">
-              <img src="/logo-dock-beam.png" alt="Dock Beam" className="footer-logo-image" />
-              <span className="footer-logo-text">Dock Beam</span>
-            </div>
+               <img src={logo} alt="Dock Beam" className="footer-logo-image" /> 
+            </div>*/}
             <p className="footer-mission">
               {t('footer.mission')}
             </p>

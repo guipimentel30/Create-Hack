@@ -27,6 +27,7 @@
 
 .navbar-logo {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 0.75rem;
   transition: transform 0.2s ease;
@@ -37,8 +38,8 @@
 }
 
 .logo-image {
-  height: 44px;
-  filter: drop-shadow(0 2px 4px rgba(92, 4, 56, 0.1));
+  /* min: 4rem, preferred: 5vw, max: 7rem */
+  width: clamp(4rem, 5vw + 1rem, 7rem);
 }
 
 .logo-text {
