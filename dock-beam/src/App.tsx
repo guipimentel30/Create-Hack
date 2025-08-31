@@ -7,6 +7,7 @@ import Hero from './components/Hero.jsx';
 import JoinUs from './components/JoinUs.tsx';
 import Footer from './components/Footer.jsx';
 import AboutUsPage from './components/AboutUsPage.tsx';
+import PartnersPage from './components/Partners.tsx';
 import LoginPage from './components/LoginPage.tsx';
 import UserRegister from './components/UserRegister.tsx';
 import RefugiadoRegister from './components/RefugiadoRegister.tsx';
@@ -51,6 +52,8 @@ function App() {
     switch (currentPage) {
       case 'about':
         return <AboutUsPage />;
+      case 'partners':
+        return <PartnersPage />;
       case 'login':
         return <LoginPage onLogin={handleLogin} />;
       case 'register':
