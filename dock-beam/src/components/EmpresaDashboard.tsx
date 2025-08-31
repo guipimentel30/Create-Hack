@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useVagas } from '../hooks/useVagas';
+import { useState, useEffect } from 'react';
+import { useVagas, type Candidatura } from '../hooks/useVagas';
 import VagaForm from './VagaForm';
 import VagaEditForm from './VagaEditForm';
 import '../css/UserRegister.css';
@@ -21,7 +21,7 @@ export default function EmpresaDashboard() {
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [editingVaga, setEditingVaga] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
-  const [candidaturas, setCandidaturas] = useState([]);
+  const [candidaturas, setCandidaturas] = useState<Candidatura[]>([]);
   const [loadingCandidates, setLoadingCandidates] = useState(false);
 
   // Scroll to top when component mounts
@@ -131,8 +131,6 @@ export default function EmpresaDashboard() {
   }
 
   if (selectedVaga) {
-    const vaga = getVagaById(selectedVaga);
-    const candidaturasList = vaga ? vaga.candidaturas : [];
 
     return (
       <div className="user-register-page">
@@ -273,7 +271,7 @@ export default function EmpresaDashboard() {
                                 <h4 className="job-title">{vaga.titulo}</h4>
                                 <div className="job-details">
                                   <span className="job-language">
-                                   {vaga.idioma.nome} - {vaga.nivel_proficiencia}
+                                    <p>Área: {vaga.area_atuacao?.nome || 'N/A'}</p>
                                   </span>
                                   <span className="job-candidates">
                                     {vaga.candidaturas_count} candidatos

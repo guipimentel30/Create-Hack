@@ -187,7 +187,7 @@ export default function RefugiadoDashboard() {
                         {vagasAtivas.map((vaga) => (
                           <div key={vaga.id} className="vaga-card">
                             <h4>{vaga.titulo}</h4>
-                            <p><strong>Idioma:</strong> {vaga.idioma?.nome} - {vaga.nivel_proficiencia}</p>
+                            <p><strong>Idioma:</strong> {vaga.idioma?.nome}</p>
                             <p><strong>Salário:</strong> {formatSalary(vaga.salario_min, vaga.salario_max)}</p>
                             {vaga.descricao && (
                               <p><strong>Descrição:</strong> {vaga.descricao}</p>

@@ -10,6 +10,7 @@ export interface Idioma {
 interface CreateUserData {
   nome: string
   cpf: string
+  telefone: string
   formacao: boolean
   atuacao_em_missao: boolean
   relato: string

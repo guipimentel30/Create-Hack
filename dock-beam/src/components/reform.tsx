@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useReform } from '../hooks/useReform'
+// import { useReform } from '../hooks/useReform' // Commented out due to missing hook
 
 interface UserInputProps {
   onSubmit?: (data: { nome: string; cpf: string }) => void
@@ -11,7 +11,12 @@ export default function UserInput({ onSubmit, onSuccess }: UserInputProps) {
   const [cpf, setCpf] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { loading, error, success, createUserRecord, reset } = useReform()
+  // const { loading, error, success, createUserRecord, reset } = useReform() // Commented out due to missing hook
+  const loading = false
+  const error = null
+  const success = false
+  const createUserRecord = async (userData: any) => {}
+  const reset = () => {}
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

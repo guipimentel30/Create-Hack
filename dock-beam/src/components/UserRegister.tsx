@@ -270,7 +270,7 @@ export default function ProfessorSignupForm() {
 
               <div className="form-group">
                 <label className="form-checkbox-item">
-                  <input type="checkbox" checked={atuacaoEmMissao} onChange={e => setAtuacaoEmMissão(e.target.checked)} className="checkbox-input" />
+                  <input type="checkbox" checked={atuacaoEmMissao} onChange={e => setAtuacaoEmMissao(e.target.checked)} className="checkbox-input" />
                   <span className="checkbox-label">Já atuou em missão?</span>
                 </label>
               </div>

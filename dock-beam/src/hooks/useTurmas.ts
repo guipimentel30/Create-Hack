@@ -98,7 +98,16 @@ export function useTurmas(): UseTurmasHook {
         .order('semestre_ano', { ascending: false })
 
       if (error) throw error
-      setTurmas(data || [])
+      
+      const processedTurmas = (data || []).map((turma: any) => ({
+        ...turma,
+        idioma: Array.isArray(turma.idioma) ? turma.idioma[0] : turma.idioma,
+        professor: Array.isArray(turma.professor) ? turma.professor[0] : turma.professor,
+        horarios: Array.isArray(turma.horarios) ? turma.horarios : [],
+        refugiados: Array.isArray(turma.refugiados) ? turma.refugiados : []
+      })) as Turma[]
+      
+      setTurmas(processedTurmas)
     } catch (err) {
       console.error('Erro ao buscar turmas:', err)
       setError(err instanceof Error ? err.message : 'Erro ao carregar turmas')

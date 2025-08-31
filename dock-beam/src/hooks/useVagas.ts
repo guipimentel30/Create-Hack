@@ -112,7 +112,7 @@ export function useVagas(): UseVagasHook {
 
       // Buscar contagem de candidaturas para cada vaga
       const vagasWithCounts = await Promise.all(
-        (data || []).map(async (vaga) => {
+        (data || []).map(async (vaga: any) => {
           const { count } = await supabase
             .from('candidaturas')
             .select('*', { count: 'exact', head: true })
@@ -120,8 +120,10 @@ export function useVagas(): UseVagasHook {
 
           return {
             ...vaga,
+            idioma: Array.isArray(vaga.idioma) ? vaga.idioma[0] : vaga.idioma,
+            area_atuacao: Array.isArray(vaga.area_atuacao) ? vaga.area_atuacao[0] : vaga.area_atuacao,
             candidaturas_count: count || 0
-          }
+          } as Vaga
         })
       )
 
@@ -174,7 +176,12 @@ export function useVagas(): UseVagasHook {
         .order('data_aplicacao', { ascending: false })
 
       if (error) throw error
-      return data || []
+      const processedCandidaturas = (data || []).map((candidatura: any) => ({
+        ...candidatura,
+        refugiado: candidatura.refugiado || null
+      })) as Candidatura[]
+      
+      return processedCandidaturas
     } catch (err) {
       console.error('Erro ao buscar candidaturas:', err)
       throw err
@@ -187,7 +194,7 @@ export function useVagas(): UseVagasHook {
     notas?: string
   ): Promise<void> => {
     try {
-      const updateData: any = { status }
+      const updateData: { status: string; notas?: string } = { status }
       if (notas !== undefined) updateData.notas = notas
 
       const { error } = await supabase

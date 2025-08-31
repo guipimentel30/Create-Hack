@@ -177,7 +177,7 @@ export function useRefugiado(): UseRefugiadoHook {
 
       // Buscar contagem de candidaturas para cada vaga
       const vagasWithCounts = await Promise.all(
-        (data || []).map(async (vaga) => {
+        (data || []).map(async (vaga: any) => {
           const { count } = await supabase
             .from('candidaturas')
             .select('*', { count: 'exact', head: true })
@@ -185,8 +185,10 @@ export function useRefugiado(): UseRefugiadoHook {
 
           return {
             ...vaga,
+            idioma: Array.isArray(vaga.idioma) ? vaga.idioma[0] : vaga.idioma,
+            area_atuacao: Array.isArray(vaga.area_atuacao) ? vaga.area_atuacao[0] : vaga.area_atuacao,
             candidaturas_count: count || 0
-          }
+          } as Vaga
         })
       )
 
@@ -217,10 +219,10 @@ export function useRefugiado(): UseRefugiadoHook {
           refugiado_id,
           status,
           created_at,
-          vaga: vaga_id (
+          vaga:vagas(
             id,
             titulo,
-            area_atuacao: area_atuacao_id (
+            area_atuacao:areas_atuacao(
               id,
               nome
             )
@@ -230,7 +232,17 @@ export function useRefugiado(): UseRefugiadoHook {
 
       if (error) throw error
 
-      setCandidaturas(data || [])
+      const processedCandidaturas = (data || []).map((candidatura: any) => ({
+        ...candidatura,
+        vaga: Array.isArray(candidatura.vaga) ? {
+          ...candidatura.vaga[0],
+          area_atuacao: Array.isArray(candidatura.vaga[0]?.area_atuacao) 
+            ? candidatura.vaga[0].area_atuacao[0] 
+            : candidatura.vaga[0]?.area_atuacao
+        } : candidatura.vaga
+      })) as Candidatura[]
+      
+      setCandidaturas(processedCandidaturas)
     } catch (err) {
       console.error('Erro ao buscar candidaturas:', err)
       setCandidaturasError(err instanceof Error ? err.message : 'Erro ao carregar candidaturas')
@@ -256,7 +268,12 @@ export function useRefugiado(): UseRefugiadoHook {
 
       if (error) throw error
 
-      setTurmasDisponiveis(data || [])
+      const processedTurmas = (data || []).map((turma: any) => ({
+        ...turma,
+        idioma: Array.isArray(turma.idioma) ? turma.idioma[0] : turma.idioma
+      })) as TurmaDisponivel[]
+      
+      setTurmasDisponiveis(processedTurmas)
     } catch (err) {
       console.error('Erro ao buscar turmas:', err)
       setTurmasError(err instanceof Error ? err.message : 'Erro ao carregar turmas')

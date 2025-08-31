@@ -7,7 +7,7 @@ import '../css/partners.css';
 
 // Mock for useTranslation to avoid dependency errors
 const useTranslation = () => {
-  const t = (key) => key; // Just return the key as fallback
+  const t = (key: string) => key; // Just return the key as fallback
   const i18n = { language: 'pt-BR' }; // Default language
   return { t, i18n };
 };
