@@ -34,9 +34,12 @@ export default function Navbar({ session, onShowAuth, currentPage, setCurrentPag
           >
             {t('navbar.home')}
           </button>
-          <a href="#como-funciona" className="nav-link">{t('navbar.howItWorks')}</a>
-          <a href="#parceiros" className="nav-link">{t('navbar.partners')}</a>
-          <button 
+            <button 
+              onClick={() => setCurrentPage('partners')}
+              className={`nav-link ${currentPage === 'partners' ? 'nav-link--active' : ''}`}
+            >
+              {t('navbar.partners')}
+            </button>          <button 
             onClick={() => setCurrentPage('about')} 
             className={`nav-link ${currentPage === 'about' ? 'nav-link--active' : ''}`}
           >
@@ -82,8 +85,12 @@ export default function Navbar({ session, onShowAuth, currentPage, setCurrentPag
             >
               {t('navbar.home')}
             </button>
-            <a href="#como-funciona" className="mobile-link" onClick={toggleMenu}>{t('navbar.howItWorks')}</a>
-            <a href="#parceiros" className="mobile-link" onClick={toggleMenu}>{t('navbar.partners')}</a>
+            <button
+                onClick={() => { setCurrentPage('partners'); toggleMenu(); }}
+                className={`mobile-link ${currentPage === 'partners' ? 'nav-link--active' : ''}`}
+              >
+                {t('navbar.partners')}
+              </button>
           </div>
           <div className="mobile-actions">
             <LanguageSwitcher />

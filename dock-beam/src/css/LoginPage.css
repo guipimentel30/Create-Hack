@@ -318,9 +318,18 @@
 }
 
 .btn--primary {
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  background: linear-gradient(135deg, var(--primary-purple), var(--primary-maroon));
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 250px;
+  box-shadow: 0 4px 12px rgba(53, 57, 170, 0.2);
 }
 
 .btn--primary:hover {

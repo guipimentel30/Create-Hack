@@ -1,11 +1,60 @@
-/* UserRegister.css */
+/**
+ * UserRegister.css
+ *
+ * This stylesheet provides the styling for the user registration page.
+ * It includes styles for the main layout, form elements, complex components like
+ * an availability table and user type selection cards, and responsive adjustments.
+ */
+
+/* ==========================================================================
+   1. ROOT VARIABLES & GLOBAL STYLES
+   ========================================================================== */
+
+/*
+ * Defines the color palette and global font settings for the page.
+ * Using CSS variables makes it easy to maintain a consistent theme.
+ */
+:root {
+  /* Primary Colors */
+  --primary-blue: #3b82f6;
+  --primary-purple: #8b5cf6;
+  --primary-maroon: #5c0438; /* Guessed from context */
+  --primary-gradient: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-purple) 100%);
+
+  /* Text Colors */
+  --text-dark: #1a202c;
+  --text-medium: #374151;
+  --text-light: #64748b;
+
+  /* Border & Background Colors */
+  --border-color: #e5e7eb;
+  --background-light: #f8fafc;
+  --background-white: #fff;
+
+  /* Feedback Colors */
+  --success-bg: #dcfce7;
+  --success-text: #166534;
+  --success-border: #bbf7d0;
+  --error-bg: #fef2f2;
+  --error-text: #dc2626;
+  --error-border: #fecaca;
+}
+
+/* Base styles for the entire registration page */
 .user-register-page {
   font-family: 'Inter', 'Poppins', sans-serif;
   min-height: 100vh;
-  padding-top: 72px; /* Account for fixed navbar height */
+  padding-top: 72px; /* A Tcount for a fixed navbar height */
 }
 
-/* Hero Section */
+
+/* ==========================================================================
+   2. HERO SECTION
+   ========================================================================== */
+
+/*
+ * The full-screen background section that sits behind the registration form.
+ */
 .register-hero {
   position: relative;
   min-height: calc(100vh - 72px);
@@ -16,32 +65,39 @@
   padding: 2rem 1rem;
 }
 
+/* A gradient overlay to improve text readability over the background image */
 .register-hero__overlay {
   position: absolute;
-  inset: 0;
+  inset: 0; /* A shorthand for top: 0; right: 0; bottom: 0; left: 0; */
   background: linear-gradient(135deg, rgba(58, 90, 154, 0.8) 0%, rgba(92, 4, 56, 0.7) 100%);
   z-index: 1;
 }
 
+/* The content container within the hero, ensuring it stays centered */
 .register-hero__content {
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 800px; /* Wider than login for more form fields */
+  max-width: 800px; /* Wider than login to accommodate more form fields */
   margin: 0 auto;
 }
 
-/* Register Container */
+
+/* ==========================================================================
+   3. REGISTRATION CONTAINER & HEADER
+   ========================================================================== */
+
+/* The main "card" or container for the registration form */
 .register-container {
   background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px); /* Creates a frosted glass effect */
   border-radius: 20px;
   padding: 3rem 2.5rem;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Header */
+/* Header section within the registration container */
 .register-header {
   text-align: center;
   margin-bottom: 2.5rem;
@@ -50,7 +106,7 @@
 .register-header__title {
   font-size: 2.5rem;
   font-weight: 800;
-  color: #1a202c;
+  color: var(--text-dark);
   margin-bottom: 0.5rem;
   line-height: 1.2;
   letter-spacing: -0.02em;
@@ -58,72 +114,119 @@
 
 .register-header__subtitle {
   font-size: 1.1rem;
-  color: #64748b;
+  color: var(--text-light);
   font-weight: 400;
   line-height: 1.5;
   margin: 0;
 }
 
-/* Form Styles */
+
+/* ==========================================================================
+   4. FORM STYLES
+   ========================================================================== */
+
+/* --- General Form & Field Grouping --- */
+
 .register-form {
   margin-bottom: 2rem;
 }
 
+/* A container for a label and its corresponding input */
 .form-group {
   margin-bottom: 1.5rem;
 }
 
+/* Styling for form field labels */
 .form-label {
   display: block;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-medium);
   margin-bottom: 0.5rem;
 }
 
+/* Wrapper for an input and its associated icon */
 .form-input-wrapper {
   position: relative;
   display: flex;
   align-items: center;
 }
 
+
+/* --- Text Inputs, Textareas, and Icons --- */
+
+/* Base style for all text-based inputs */
 .form-input {
   width: 100%;
   padding: 1rem;
-  border: 2px solid #e5e7eb;
+  padding-left: 2.75rem; /* Make space on the left for an icon */
+  border: 2px solid var(--border-color);
   border-radius: 12px;
   font-size: 1rem;
   font-weight: 400;
-  background: #fff;
+  background: var(--background-white);
   transition: all 0.2s ease;
   outline: none;
 }
 
+/* Styles for the icon inside the input wrapper */
+.form-input-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  pointer-events: none; /* Allows clicks to pass through to the input */
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* * Icon Hiding Logic:
+ * The :has() pseudo-class selects the wrapper if it contains an input
+ * that is NOT showing its placeholder (i.e., the user has started typing).
+ * This makes the icon fade out.
+ */
+.form-input-wrapper:has(.form-input:not(:placeholder-shown)) .form-input-icon {
+  opacity: 0;
+}
+
+/* Smoothly fades out the placeholder text on focus */
+.form-input::placeholder {
+  transition: color 0.2s ease-in-out;
+}
+
+.form-input:focus::placeholder {
+  color: transparent;
+}
+
+/* Focus state for a valid input */
 .form-input:focus {
-  border-color: #3b82f6;
+  border-color: var(--primary-blue);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
+/* Styles for an input with a validation error */
 .form-input--error {
-  border-color: #ef4444;
+  border-color: var(--error-text);
 }
 
 .form-input--error:focus {
-  border-color: #ef4444;
+  border-color: var(--error-text);
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
 }
 
-/* Textarea specific styles */
+/* Specific styles for textarea elements */
 .form-textarea {
   min-height: 120px;
   resize: vertical;
-  font-family: inherit;
+  font-family: inherit; /* Ensures textarea uses the page's font */
 }
 
-/* File input styles */
+
+/* --- File Inputs --- */
+
 .form-file-input {
   padding: 0.75rem;
-  background: #f8fafc;
+  background: var(--background-light);
   border: 2px dashed #cbd5e1;
   border-radius: 12px;
   cursor: pointer;
@@ -136,11 +239,13 @@
 }
 
 .form-file-input:focus {
-  border-color: #3b82f6;
+  border-color: var(--primary-blue);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-/* Checkbox and Radio Styles */
+
+/* --- Checkboxes & Radio Buttons --- */
+
 .form-checkbox-group {
   display: flex;
   flex-direction: column;
@@ -152,74 +257,146 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem;
-  border: 2px solid #e5e7eb;
+  border: 2px solid var(--border-color);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
-  background: #fff;
+  background: var(--background-white);
 }
 
 .form-checkbox-item:hover {
   border-color: #cbd5e1;
-  background: #f8fafc;
+  background: var(--background-light);
 }
 
+/* Style for the selected/checked state */
 .form-checkbox-item.checked {
-  border-color: #3b82f6;
+  border-color: var(--primary-blue);
   background: rgba(59, 130, 246, 0.05);
 }
 
 .checkbox-input {
   width: 1.2rem;
   height: 1.2rem;
-  accent-color: #3b82f6;
+  accent-color: var(--primary-blue);
   cursor: pointer;
 }
 
 .checkbox-label {
   font-size: 0.95rem;
-  color: #374151;
+  color: var(--text-medium);
   font-weight: 500;
   cursor: pointer;
   flex: 1;
 }
 
-/* Outro idioma input styling */
+/* Styles for a conditional input that appears when an "Other" option is checked */
 .form-checkbox-group .form-group {
   margin-top: 12px;
   margin-left: 24px;
   animation: slideDown 0.3s ease-out;
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+
+/* --- Dropdowns --- */
+
+.dropdown-container {
+  position: relative;
+  width: 100%;
 }
 
-/* Fieldset Styles */
+.dropdown-toggle {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  background: white;
+  color: var(--text-dark);
+  font-size: 16px;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.dropdown-toggle:hover,
+.dropdown-toggle:focus {
+  outline: none;
+  border-color: var(--primary-maroon);
+}
+
+.dropdown-toggle:focus {
+  box-shadow: 0 0 0 3px rgba(92, 4, 56, 0.1);
+}
+
+.dropdown-arrow {
+  transition: transform 0.3s ease;
+  color: var(--primary-maroon);
+  font-size: 12px;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid var(--border-color);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa;
+}
+
+
+/* --- Fieldsets --- */
+
+/* Used to group related form controls */
 .form-fieldset {
-  border: 2px solid #e5e7eb;
+  border: 2px solid var(--border-color);
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
-  background: #fff;
+  background: var(--background-white);
 }
 
 .form-legend {
   font-size: 1rem;
   font-weight: 600;
-  color: #374151;
+  color: var(--text-medium);
   padding: 0 0.5rem;
-  background: #fff;
+  background: var(--background-white);
 }
 
-/* Social Login Button */
+
+/* --- Buttons --- */
+
+/* Button for social login options (e.g., Google) */
 .social-btn {
   display: flex;
   align-items: center;
@@ -227,10 +404,10 @@
   gap: 0.75rem;
   width: 100%;
   padding: 1rem 2rem;
-  border: 2px solid #e5e7eb;
+  border: 2px solid var(--border-color);
   border-radius: 12px;
-  background: #fff;
-  color: #374151;
+  background: var(--background-white);
+  color: var(--text-medium);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -238,6 +415,7 @@
   margin-bottom: 2rem;
 }
 
+/* Example hover state for a Google button */
 .social-btn:hover {
   border-color: #ea4335;
   color: #ea4335;
@@ -246,7 +424,7 @@
   box-shadow: 0 4px 12px rgba(234, 67, 53, 0.2);
 }
 
-/* Submit Button */
+/* The main form submission button */
 .register-submit {
   width: 100%;
   padding: 1rem 2rem;
@@ -254,7 +432,7 @@
   font-weight: 600;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  background: var(--primary-gradient);
   color: #fff;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -278,6 +456,7 @@
   transform: none;
 }
 
+/* Container for text and spinner when button is in loading state */
 .loading-content {
   display: flex;
   align-items: center;
@@ -285,6 +464,7 @@
   gap: 0.5rem;
 }
 
+/* A simple spinning loader */
 .spinner {
   width: 1.2rem;
   height: 1.2rem;
@@ -294,13 +474,38 @@
   animation: spin 1s linear infinite;
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+
+/* --- Success/Error Messages --- */
+
+.form-message {
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-/* Availability Table Styles */
+.form-message--success {
+  background: var(--success-bg);
+  color: var(--success-text);
+  border: 2px solid var(--success-border);
+}
+
+.form-message--error {
+  background: var(--error-bg);
+  color: var(--error-text);
+  border: 2px solid var(--error-border);
+}
+
+
+/* ==========================================================================
+   5. COMPLEX COMPONENTS
+   ========================================================================== */
+
+/* --- Availability Table --- */
+
 .availability-section {
   margin-top: 2rem;
   padding: 2rem;
@@ -312,7 +517,7 @@
 .availability-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #1a202c;
+  color: var(--text-dark);
   margin-bottom: 1.5rem;
   text-align: center;
 }
@@ -322,13 +527,13 @@
   border-collapse: separate;
   border-spacing: 0;
   border-radius: 12px;
-  overflow: hidden;
+  overflow: hidden; /* Ensures border-radius is respected on child elements */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  background: #fff;
+  background: var(--background-white);
 }
 
 .availability-table th {
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  background: var(--primary-gradient);
   color: #fff;
   padding: 1rem 0.75rem;
   font-weight: 600;
@@ -344,20 +549,21 @@
 
 .availability-table td {
   padding: 1rem 0.75rem;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--border-color);
   text-align: center;
-  background: #fff;
+  background: var(--background-white);
   transition: background-color 0.2s ease;
 }
 
 .availability-table td:first-child {
   font-weight: 600;
-  color: #374151;
+  color: var(--text-medium);
   text-align: left;
   padding-left: 1.5rem;
-  background: #f8fafc;
+  background: var(--background-light);
 }
 
+/* Apply hover effect to all cells in the row */
 .availability-table tr:hover td {
   background: #f1f5f9;
 }
@@ -373,7 +579,7 @@
 .availability-checkbox {
   width: 1.25rem;
   height: 1.25rem;
-  accent-color: #3b82f6;
+  accent-color: var(--primary-blue);
   cursor: pointer;
   transition: transform 0.2s ease;
 }
@@ -382,30 +588,9 @@
   transform: scale(1.1);
 }
 
-/* Success/Error Messages */
-.form-message {
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
-  margin-bottom: 1.5rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
 
-.form-message--success {
-  background: #dcfce7;
-  color: #166534;
-  border: 2px solid #bbf7d0;
-}
+/* --- User Type Selection Cards --- */
 
-.form-message--error {
-  background: #fef2f2;
-  color: #dc2626;
-  border: 2px solid #fecaca;
-}
-
-/* User Type Selection Cards */
 .user-type-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -423,21 +608,20 @@
   padding: 2.5rem 2rem;
   text-align: center;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid rgba(53, 57, 170, 0.05);
   display: flex;
   flex-direction: column;
   align-items: center;
-  
-  /* Initial state - hidden and moved down with wave effect */
+
+  /* Initial state for animation: hidden and moved down */
   opacity: 0;
   transform: translateY(60px) scale(0.9);
-  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
-              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
               box-shadow 0.3s ease;
 }
 
-/* Animated state - visible and in position */
+/* Animated state: visible and in position (triggered by adding the class) */
 .user-type-card.animate-in {
   opacity: 1;
   transform: translateY(0) scale(1);
@@ -447,7 +631,7 @@
   box-shadow: 0 8px 32px rgba(53, 57, 170, 0.15);
 }
 
-/* Hover effect only applies when card is animated in */
+/* Apply upward shift on hover only after the initial animation is complete */
 .user-type-card.animate-in:hover {
   transform: translateY(-5px);
 }
@@ -472,7 +656,7 @@
   line-height: 1.6;
   margin-bottom: 2rem;
   font-weight: 400;
-  flex-grow: 1;
+  flex-grow: 1; /* Allows description to fill space, aligning buttons */
 }
 
 .card-button {
@@ -491,232 +675,193 @@
 }
 
 .card-button:hover {
-  background: linear-gradient(135deg, var(--primary-maroon), var(--primary-purple));
+  background: var(--secondary-red);
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(53, 57, 170, 0.3);
 }
 
-/* Dropdown styles for areas selection */
-.dropdown-container {
-  position: relative;
-  width: 100%;
+
+/* ==========================================================================
+   6. ANIMATIONS
+   ========================================================================== */
+
+/* Keyframe animation for the spinning loader */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.dropdown-toggle {
-  width: 100%;
-  padding: 12px 16px;
-  border: 2px solid var(--cream);
-  border-radius: 8px;
-  background: white;
-  color: var(--text-dark);
-  font-size: 16px;
-  text-align: left;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: all 0.3s ease;
+/* Keyframe animation for conditionally revealed inputs */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.dropdown-toggle:hover {
-  border-color: var(--primary-maroon);
-}
 
-.dropdown-toggle:focus {
-  outline: none;
-  border-color: var(--primary-maroon);
-  box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
-}
+/* ==========================================================================
+   7. UTILITY & CUSTOM SCROLLBARS
+   ========================================================================== */
 
-.dropdown-arrow {
-  transition: transform 0.3s ease;
-  color: var(--primary-maroon);
-  font-size: 12px;
-}
+/* --- Simple utility classes for reuse --- */
 
-.dropdown-arrow.open {
-  transform: rotate(180deg);
-}
+.text-center { text-align: center; }
+.mb-4 { margin-bottom: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.capitalize { text-transform: capitalize; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
 
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: white;
-  border: 2px solid var(--cream);
-  border-top: none;
-  border-radius: 0 0 8px 8px;
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 1000;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
 
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  border-bottom: 1px solid var(--cream);
-}
+/* --- Custom Scrollbars --- */
 
-.dropdown-item:last-child {
-  border-bottom: none;
-}
-
-.dropdown-item:hover {
-  background-color: #f8f9fa;
-}
-
-.dropdown-item .checkbox-input {
-  margin-right: 8px;
-  width: 16px;
-  height: 16px;
-}
-
-.dropdown-item .checkbox-label {
-  flex: 1;
-  font-size: 14px;
-  color: var(--text-dark);
-}
-
-/* Custom scrollbar for dropdown */
+/* Custom scrollbar for multi-select dropdown menu */
 .dropdown-menu::-webkit-scrollbar {
   width: 6px;
 }
-
 .dropdown-menu::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 3px;
 }
-
 .dropdown-menu::-webkit-scrollbar-thumb {
   background: var(--primary-maroon);
   border-radius: 3px;
 }
-
 .dropdown-menu::-webkit-scrollbar-thumb:hover {
-  background: #8B4513;
+  background: #8B4513; /* A slightly darker maroon */
 }
 
-/* Responsive Design */
+/* Custom scrollbar for textareas */
+.form-textarea::-webkit-scrollbar {
+  width: 6px;
+}
+.form-textarea::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+.form-textarea::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+.form-textarea::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+
+/* ==========================================================================
+   8. RESPONSIVE DESIGN
+   ========================================================================== */
+
+/*
+ * Adjustments for tablet-sized screens and smaller.
+ */
 @media (max-width: 768px) {
   .register-hero {
     padding: 1rem;
   }
-
   .register-container {
     padding: 2rem 1.5rem;
   }
-
   .register-header__title {
     font-size: 2rem;
   }
-
   .register-header__subtitle {
     font-size: 1rem;
   }
-
   .form-checkbox-group {
     gap: 0.5rem;
   }
-
   .form-checkbox-item {
     padding: 0.5rem;
   }
-
   .availability-table th,
   .availability-table td {
     padding: 0.75rem 0.5rem;
     font-size: 0.875rem;
   }
-
   .availability-table th:first-child,
   .availability-table td:first-child {
     padding-left: 1rem;
   }
 }
 
+/*
+ * Adjustments for mobile-sized screens.
+ */
 @media (max-width: 480px) {
   .register-container {
     padding: 1.5rem 1rem;
     border-radius: 16px;
   }
-
   .register-header__title {
     font-size: 1.75rem;
   }
-
   .form-input {
     padding: 0.875rem;
+    /* Adjust icon padding for smaller inputs if needed */
+    padding-left: 2.5rem; 
   }
-
   .availability-section {
     padding: 1.5rem 1rem;
   }
-
   .availability-table {
     font-size: 0.8rem;
   }
-
   .availability-table th,
   .availability-table td {
     padding: 0.5rem 0.25rem;
   }
-
   .availability-table th:first-child,
   .availability-table td:first-child {
     padding-left: 0.5rem;
   }
-
   .availability-checkbox {
     width: 1rem;
     height: 1rem;
   }
 }
 
-/* Utility Classes */
-.text-center {
-  text-align: center;
+/* Estilo para a borda do input quando há um erro */
+.form-input--error {
+  border-color: #e53e3e; /* Vermelho para indicar erro */
 }
 
-.mb-4 {
-  margin-bottom: 1rem;
+.form-input--error:focus {
+  border-color: #e53e3e;
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.2); /* Sombra de foco vermelha */
 }
 
-.mt-6 {
-  margin-top: 1.5rem;
+/* Estilo para a mensagem de erro abaixo do input */
+.form-error-message {
+  color: #e53e3e;
+  font-size: 0.875rem; /* 14px */
+  margin-top: 0.5rem; /* 8px */
+  text-align: left;
 }
 
-.capitalize {
-  text-transform: capitalize;
+/* Adicione este código ao final do seu arquivo UserRegister.css */
+
+/* Estilo para a borda do input quando há um erro */
+.form-input--error {
+  border-color: #e53e3e; /* Tom de vermelho para erro */
 }
 
-.font-semibold {
-  font-weight: 600;
+.form-input--error:focus {
+  border-color: #e53e3e;
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.2); /* Sombra de foco vermelha */
 }
 
-.font-bold {
-  font-weight: 700;
-}
-
-/* Custom scrollbar for textarea */
-.form-textarea::-webkit-scrollbar {
-  width: 6px;
-}
-
-.form-textarea::-webkit-scrollbar-track {
-  background: #f1f5f9;
-  border-radius: 3px;
-}
-
-.form-textarea::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 3px;
-}
-
-.form-textarea::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+/* Estilo para a mensagem de erro que aparece abaixo do input */
+.form-error-message {
+  color: #c53030; /* Tom de vermelho mais escuro para o texto */
+  font-size: 0.875rem; /* 14px */
+  margin-top: 0.5rem; /* 8px de espaço acima */
+  text-align: left;
+  width: 100%;
 }
