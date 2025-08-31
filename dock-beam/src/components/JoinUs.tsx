@@ -44,17 +44,17 @@ export default function JoinUs() {
         <div className="joinus-card">
           <h3>{t('joinUs.refugee.title')}</h3>
           <p>{t('joinUs.refugee.description')}</p>
-          <button className="btn btn--primary">{t('joinUs.refugee.cta')}</button>
+          {/*<button className="btn btn--primary">{t('joinUs.refugee.cta')}</button>*/}
         </div>
         <div className="joinus-card">
           <h3>{t('joinUs.teacher.title')}</h3>
           <p>{t('joinUs.teacher.description')}</p>
-          <button className="btn btn--primary">{t('joinUs.teacher.cta')}</button>
+          {/*<button className="btn btn--primary">{t('joinUs.teacher.cta')}</button>*/}
         </div>
         <div className="joinus-card">
           <h3>{t('joinUs.company.title')}</h3>
           <p>{t('joinUs.company.description')}</p>
-          <button className="btn btn--primary">{t('joinUs.company.cta')}</button>
+          {/*<button className="btn btn--primary">{t('joinUs.company.cta')}</button>*/}
         </div>
       </div>
     </section>

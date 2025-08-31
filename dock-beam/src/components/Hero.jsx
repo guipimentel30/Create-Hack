@@ -10,7 +10,7 @@ export default function Hero() {
       <div className="hero__content">
         <h1>{t('hero.title')}</h1>
         <p>{t('hero.subtitle')}</p>
-        <button className="btn btn--primary hero__cta">{t('hero.cta')}</button>
+        {/*<button className="btn btn--primary hero__cta">{t('hero.cta')}</button>*/}
       </div>
     </section>
   );
