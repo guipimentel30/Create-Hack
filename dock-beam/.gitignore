@@ -35,4 +35,3 @@ lerna-debug.log*
 *.sw?
 
 # Ignorar arquivos de variáveis de ambiente
-.env

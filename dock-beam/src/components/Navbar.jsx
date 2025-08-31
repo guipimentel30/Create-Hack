@@ -54,8 +54,8 @@ export default function Navbar({ session, onShowAuth, currentPage, setCurrentPag
             </>
           ) : (
             <>
-              <button className="btn-secondary" onClick={onShowAuth}>{t('navbar.login')}</button>
-              <button className="btn-primary" onClick={onShowAuth}>{t('navbar.signup')}</button>
+              <button className="btn-secondary" onClick={() => setCurrentPage('login')}>{t('navbar.login')}</button>
+              <button className="btn-primary" onClick={() => setCurrentPage('register')}>{t('navbar.signup')}</button>
             </>
           )}
         </div>
@@ -94,8 +94,8 @@ export default function Navbar({ session, onShowAuth, currentPage, setCurrentPag
               </>
             ) : (
               <>
-                <button className="btn-secondary mobile-btn" onClick={onShowAuth}>{t('navbar.login')}</button>
-                <button className="btn-primary mobile-btn" onClick={onShowAuth}>{t('navbar.signup')}</button>
+                <button className="btn-secondary mobile-btn" onClick={() => { setCurrentPage('login'); toggleMenu(); }}>{t('navbar.login')}</button>
+                <button className="btn-primary mobile-btn" onClick={() => { setCurrentPage('register'); toggleMenu(); }}>{t('navbar.signup')}</button>
               </>
             )}
           </div>
